@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Endereco;
+use App\Models\Vaga;
 
 class Empresa extends Model
 {
     use HasFactory;
-
-    protected $table = 'empresa';
 
     protected $fillable = [
         'login',
@@ -21,11 +21,11 @@ class Empresa extends Model
 
     public function endereco()
     {
-        return $this->hasOne(Endereco::class, 'empresa_id');
+        return $this->hasOne(Endereco::class);
     }
 
     public function vaga()
     {
-        return $this->hasMany(Vaga::class, 'empresa_id');
+        return $this->hasMany(Vaga::class);
     }
 }

@@ -9,8 +9,6 @@ class ExperienciaProfissional extends Model
 {
     use HasFactory;
 
-    protected $table = 'experiencia_profissional';
-
     protected $fillable = [
         'empresa',
         'cargo',
@@ -23,4 +21,5 @@ class ExperienciaProfissional extends Model
     public function candidato(){
         return $this->belongsTo(Candidato::class, 'candidato_id');
     }
+
 }

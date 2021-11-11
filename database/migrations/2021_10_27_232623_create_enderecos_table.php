@@ -26,20 +26,23 @@ class CreateEnderecosTable extends Migration
             $table->integer('telefoneComercial');
             $table->integer('fax');
             $table->unsignedBigInteger('empresa_id');
+            $table->unsignedBigInteger('candidato_id'); 
 
             $table->foreign('empresa_id')
-               ->references('id')
-               ->on('empresas')
-               ->onDelete('cascade');
-               
-            $table->unsignedBigInteger('candidato_id');
+                ->unsigned()
+                ->nullable()
+                ->references('id')
+                ->on('empresas')
+                ->onDelete('cascade');
+                
             $table->foreign('candidato_id')
+                ->unsigned()
+                ->nullable()
                 ->references('id')
                 ->on('candidatos')
-                ->onDelete('cascade');
+                ->onDelete('cascade'); 
             $table->timestamps();
         });
-
     }
 
     /**

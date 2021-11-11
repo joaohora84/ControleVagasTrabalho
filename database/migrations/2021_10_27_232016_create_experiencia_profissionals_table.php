@@ -22,6 +22,8 @@ class CreateExperienciaProfissionalsTable extends Migration
             $table->date('dataConclusao');
             $table->unsignedBigInteger('candidato_id');
             $table->foreign('candidato_id')
+                ->unsigned()
+                ->nullable()
                 ->references('id')
                 ->on('candidatos')
                 ->onDelete('cascade');

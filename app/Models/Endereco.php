@@ -9,14 +9,11 @@ class Endereco extends Model
 {
     use HasFactory;
 
-    protected $table = 'endereco';
-
     protected $fillable = [
         'tipo',
         'logradouro',
         'bairro',
         'uf',
-        'cidade',
         'cidade',
         'cep',
         'email',
@@ -36,5 +33,4 @@ class Endereco extends Model
     {
         return $this->belongsTo(Candidato::class, 'candidato_id');
     }
- 
 }

@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Empresa;
 
 class Vaga extends Model
 {
     use HasFactory;
-
-    protected $table = 'vaga';
 
     protected $fillable = [
         'cargo',
@@ -25,7 +24,7 @@ class Vaga extends Model
     ];
 
     public function empresa(){
-        return $this->belongsTo(Empresa::class, 'empresa_id');
+        return $this->belongsTo(Empresa::class);
     }
 
 }

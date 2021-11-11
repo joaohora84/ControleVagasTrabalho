@@ -24,6 +24,7 @@ class CreateVagasTable extends Migration
             $table->string('turno');
             $table->string('formaContratacao');
             $table->string('uf');
+            $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')
                ->references('id')
                ->on('empresas')
