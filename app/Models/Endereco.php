@@ -26,11 +26,11 @@ class Endereco extends Model
 
     public function empresa()
     {
-      return $this->belongsTo(Empresa::class, 'empresa_id');
+      return $this->belongsTo(Empresa::class);
     }
 
     public function candidato()
     {
-        return $this->belongsTo(Candidato::class, 'candidato_id');
+        return $this->belongsTo(Candidato::class);
     }
 }

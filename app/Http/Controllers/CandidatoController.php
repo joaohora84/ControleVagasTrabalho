@@ -10,7 +10,7 @@ class CandidatoController extends Controller
 {
     public function showForm()
     {
-        return view('candidato');
+        return view('pages.candidato');
     }
 
     public function addCandidato(Request $request)
