@@ -20,10 +20,14 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('empresa', [EmpresaController::class, 'showForm']);
-Route::post('cadastro', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
-Route::put('atualizar', [EmpresaController::class, 'atualizar'])->name('empresa.atualizar');
-Route::delete('deletar', [EmpresaController::class, 'deletar'])->name('empresa.delete');
+
+
+
+Route::get('empresa', [EmpresaController::class, 'showForm'])->name('empresa.showForm');
+Route::post('empresa', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
+Route::get('editar/{id}', [EmpresaController::class, 'editar'])->name('empresa.editar');
+Route::post('atualizar/{id}', [EmpresaController::class, 'atualizar'])->name('empresa.atualizar');
+Route::get('deletar/{id}', [EmpresaController::class, 'deletar'])->name('empresa.deletar');
 Route::get('empresas', [EmpresaController::class, 'getEmpresa'])->name('empresa.list');
 Route::get('empresa/{nome}', [EmpresaController::class, 'getEmpresaPorNome'])->name('empresa.nome');
 Route::get('empresa/{cidade}', [EmpresaController::class, 'getEmpresaPorCidade'])->name('empresa.cidade');
@@ -43,8 +47,9 @@ Route::get('vaga', [VagaController::class, 'showForm']);
 Route::post('cadastro', [VagaController::class, 'cadastro'])->name('vaga.cadastro');
 Route::put('atualizar', [VagaController::class, 'atualizar'])->name('vaga.atualizar');
 Route::delete('deletar', [VagaController::class, 'deletar'])->name('vaga.delete');
-Route::get('vagas', [VagaController::class, 'getVagas'])->name('candidato.list');
+Route::get('vagas', [VagaController::class, 'getVagas'])->name('vaga.list');
 //Route::get('vaga/{idEmpresa}', [VagaController::class, 'getVagaPorEmpresa'])->name('vaga.empresa');
 Route::get('vaga/{cargo}', [VagaController::class, 'getVagaPorCargo'])->name('vaga.cargo');
 //Route::get('vaga/{cidade}', [VagaController::class, 'getVagaPorCidade'])->name('vaga.cidade');
 //Route::get('vaga/{uf}', [VagaController::class, 'getVagaPorUf'])->name('vaga.uf');
+

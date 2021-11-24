@@ -15,9 +15,7 @@ class VagaController extends Controller
     {
         $vagas = Vaga::with('empresa')->get();
 
-        dd($vagas);
-
-        return view('pages.vaga', compact('vagas'));
+        return view('pages.vaga_list', compact('vagas'));
     }
 
     public function getVagaPorCargo($cargo)

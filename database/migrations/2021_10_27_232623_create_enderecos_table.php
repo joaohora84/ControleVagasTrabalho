@@ -20,17 +20,18 @@ class CreateEnderecosTable extends Migration
             $table->string('bairro');
             $table->string('uf');
             $table->string('cidade');
-            $table->integer('cep');
+            $table->string('cep');
             $table->string('email');
-            $table->integer('telefoneResidencial');
-            $table->integer('telefoneComercial');
-            $table->integer('fax');
+            $table->string('telefoneResidencial');
+            $table->string('telefoneComercial')->nullable()->default(NULL);
+            $table->string('fax');
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('candidato_id'); 
 
             $table->foreign('empresa_id')
                 ->unsigned()
                 ->nullable()
+                ->default(NULL)
                 ->references('id')
                 ->on('empresas')
                 ->onDelete('cascade');
@@ -38,6 +39,7 @@ class CreateEnderecosTable extends Migration
             $table->foreign('candidato_id')
                 ->unsigned()
                 ->nullable()
+                ->default(NULL)
                 ->references('id')
                 ->on('candidatos')
                 ->onDelete('cascade'); 

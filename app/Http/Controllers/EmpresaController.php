@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Empresa;
+use App\Models\Endereco;
 
 class EmpresaController extends Controller 
 {
@@ -13,28 +14,95 @@ class EmpresaController extends Controller
         return view('pages.empresa');
     }
 
-    public function create(Request $request)
+    public function cadastro(Request $request)
     {
-        $data = $request->only('login');
-        $data = $request->only('senha');
-        $data = $request->only('razaoSocial');
-        $data = $request->only('cnpj');
-        $data = $request->only('areaAtuacao'); 
+
+        $empresa = Empresa::create([
+            'login' => $request->login,
+            'senha' => $request->senha,
+            'razaoSocial' => $request->razaoSocial,
+            'cnpj' => $request->cnpj,
+            'areaAtuacao' => $request->areaAtuacao,
+        ]);
+
         
-        Empresa::create($data);
+        Endereco::create([
+            'tipo' => $request->tipo,
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'cidade' => $request->cidade,
+            'bairro' => $request->bairro,
+            'uf' => $request->uf,
+            'email' => $request->email,
+            'telefoneComercial' => $request->telefoneComercial,
+            'fax' => $request->fax,
+            'empresa_id' => $empresa->id,
+            
+        ]);
 
         return view('pages.empresa');
         
+    }
+
+
+
+    public function editar($id) 
+    {
+        
+        $empresa = Empresa::with('endereco')->find($id);
+
+        return view('pages.empresa', compact('empresa'));
+        
+    }
+
+    public function atualizar(Request $request, $id)
+    {
+
+        $empresa = Empresa::find($id);
+        $endereco = Endereco::where('empresa_id', $id);
+
+        $empresa->update([
+            'login' => $request->login,
+            'senha' => $request->senha,
+            'razaoSocial' => $request->razaoSocial,
+            'cnpj' => $request->cnpj,
+            'areaAtuacao' => $request->areaAtuacao,
+        ]);
+
+        $endereco->update([
+            'tipo' => $request->tipo,
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'cidade' => $request->cidade,
+            'bairro' => $request->bairro,
+            'uf' => $request->uf,
+            'email' => $request->email,
+            'telefoneComercial' => $request->telefoneComercial,
+            'fax' => $request->fax,
+        ]);
+
+        $empresas = Empresa::with('endereco', 'vaga')->get();
+
+        return view('pages.empresa_list', compact('empresas'));
+
+    
+    }
+
+   
+    public function deletar(Empresa $id) 
+    {
+        $id->delete();
+
+        return back()->with('success', 'Empresa deletada');
+
     }
 
     public function getEmpresa()
     {
         
         $empresas = Empresa::with('endereco', 'vaga')->get();
-    
-        dd($empresas);
 
-        return view('pages.empresa', compact('empresas'));
+        return view('pages.empresa_list', compact('empresas'));
 
     }
 
