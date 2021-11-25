@@ -2,13 +2,86 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Vaga;
+use App\Models\Empresa;
+
 
 class VagaController extends Controller
 {
     public function showForm()
     {
-        return view('pages.vaga');
+
+        $empresas = Empresa::get();
+
+        return view('pages.vaga', compact('empresas'));
+    }
+
+    public function cadastro(Request $request)
+    {
+        Vaga::create([
+            'cargo' => $request->cargo,
+            'especificacoes' => $request->especificacoes,
+            'remuneracao' => $request->remuneracao,
+            'valeTransporte' => $request->valeTransporte,
+            'valeRefeicao' => $request->valeRefeicao,
+            'observacoes' => $request->observacoes,
+            'turno' => $request->turno,
+            'formaContratacao' => $request->formaContratacao,
+            'uf' => $request->uf,
+            'empresa_id' => $request->empresa,
+        ]);
+
+
+        $empresas = Empresa::get();
+
+        return view('pages.vaga', compact('empresas'))->with('success', 'Vaga cadastrada');
+
+    }
+
+    public function deletar(Vaga $id) 
+    {
+        $id->delete();
+
+        return back()->with('success', 'Vaga deletada');
+
+    }
+
+    public function editar($id) 
+    {
+        
+        $vaga = Vaga::find($id);
+
+        $empresas = Empresa::get();
+
+        return view('pages.vaga', compact('vaga'), compact('empresas'));
+        
+    }
+
+    public function atualizar(Request $request, $id)
+    {
+
+        $vaga = Vaga::find($id);
+        
+        $vaga->update([
+            'cargo' => $request->cargo,
+            'especificacoes' => $request->especificacoes,
+            'remuneracao' => $request->remuneracao,
+            'valeTransporte' => $request->valeTransporte,
+            'valeRefeicao' => $request->valeRefeicao,
+            'observacoes' => $request->observacoes,
+            'turno' => $request->turno,
+            'formaContratacao' => $request->formaContratacao,
+            'uf' => $request->uf,
+            'empresa_id' => $request->empresa,
+        ]);
+
+        $empresas = Empresa::with('endereco', 'vaga')->get();
+
+        return view('pages.empresa_list', compact('empresas'));
+
+    
     }
 
     public function getVagas()

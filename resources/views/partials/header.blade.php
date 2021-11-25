@@ -8,22 +8,22 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">
+                        <a class="nav-link" href="/">
                             <i class="fas fa-home"></i><span>Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('empresas') ? 'active' : '' }}" href="{{ route('empresa.list') }}">
+                        <a class="nav-link" href="{{ route('empresa.list') }}">
                             <i class="fas fa-building"></i><span>Empresas</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('vagas') ? 'active' : '' }}" href="{{ route('vaga.list') }}">
+                        <a class="nav-link" href="{{ route('vaga.list') }}">
                             <i class="fas fa-globe"></i><span>Vagas</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('candidatos') ? 'active' : '' }}" href="{{ route('candidato.list') }}">
+                        <a class="nav-link" href="{{ route('candidato.list') }}">
                             <i class="far fa-user"></i><span>Candidatos</span>
                         </a>
                     </li>

@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <h3 class="text-dark mb-4">Empresa</h3>
     <div class="row mb-3">
-        
+
         <div class="col-lg-8">
             <div class="row mb-3 d-none">
                 <div class="col">
@@ -224,7 +224,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 

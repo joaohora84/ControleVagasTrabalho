@@ -17,7 +17,7 @@ use App\Http\Controllers\CandidatoController;
 */
 
 Route::get('/', function () {
-    return view('pages.home');
+    return view('template.profile');
 });
 
 
@@ -25,13 +25,24 @@ Route::get('/', function () {
 
 Route::get('empresa', [EmpresaController::class, 'showForm'])->name('empresa.showForm');
 Route::post('empresa', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
-Route::get('editar/{id}', [EmpresaController::class, 'editar'])->name('empresa.editar');
-Route::post('atualizar/{id}', [EmpresaController::class, 'atualizar'])->name('empresa.atualizar');
-Route::get('deletar/{id}', [EmpresaController::class, 'deletar'])->name('empresa.deletar');
+Route::get('empresa_editar/{id}', [EmpresaController::class, 'editar'])->name('empresa.editar');
+Route::post('empresa_atualizar/{id}', [EmpresaController::class, 'atualizar'])->name('empresa.atualizar');
+Route::get('empresa_deletar/{id}', [EmpresaController::class, 'deletar'])->name('empresa.deletar');
 Route::get('empresas', [EmpresaController::class, 'getEmpresa'])->name('empresa.list');
 Route::get('empresa/{nome}', [EmpresaController::class, 'getEmpresaPorNome'])->name('empresa.nome');
 Route::get('empresa/{cidade}', [EmpresaController::class, 'getEmpresaPorCidade'])->name('empresa.cidade');
 Route::get('empresa/{uf}', [EmpresaController::class, 'getEmpresaPorUf'])->name('empresa.uf');
+
+Route::get('vaga', [VagaController::class, 'showForm'])->name('vaga.showForm');
+Route::post('vaga', [VagaController::class, 'cadastro'])->name('vaga.cadastro');
+Route::get('vaga_editar/{id}', [VagaController::class, 'editar'])->name('vaga.editar');
+Route::post('vaga_atualizar/{id}', [VagaController::class, 'atualizar'])->name('vaga.atualizar');
+Route::get('vaga_deletar/{id}', [VagaController::class, 'deletar'])->name('vaga.deletar');
+Route::get('vagas', [VagaController::class, 'getVagas'])->name('vaga.list');
+Route::get('vaga/{idEmpresa}', [VagaController::class, 'getVagaPorEmpresa'])->name('vaga.empresa');
+Route::get('vaga/{cargo}', [VagaController::class, 'getVagaPorCargo'])->name('vaga.cargo');
+Route::get('vaga/{cidade}', [VagaController::class, 'getVagaPorCidade'])->name('vaga.cidade');
+Route::get('vaga/{uf}', [VagaController::class, 'getVagaPorUf'])->name('vaga.uf');
 
 
 Route::get('candidato', [CandidatoController::class, 'showForm']);
@@ -43,13 +54,5 @@ Route::get('candidato/{cargo}', [CandidatoController::class, 'getCandidatoPorCar
 Route::get('candidato/{cidade}', [CandidatoController::class, 'getCandidatoPorCidade'])->name('candidato.cidade');
 Route::get('candidato/{uf}', [CandidatoController::class, 'getCandidatoPorUf'])->name('candidato.uf');
 
-Route::get('vaga', [VagaController::class, 'showForm']);
-Route::post('cadastro', [VagaController::class, 'cadastro'])->name('vaga.cadastro');
-Route::put('atualizar', [VagaController::class, 'atualizar'])->name('vaga.atualizar');
-Route::delete('deletar', [VagaController::class, 'deletar'])->name('vaga.delete');
-Route::get('vagas', [VagaController::class, 'getVagas'])->name('vaga.list');
-//Route::get('vaga/{idEmpresa}', [VagaController::class, 'getVagaPorEmpresa'])->name('vaga.empresa');
-Route::get('vaga/{cargo}', [VagaController::class, 'getVagaPorCargo'])->name('vaga.cargo');
-//Route::get('vaga/{cidade}', [VagaController::class, 'getVagaPorCidade'])->name('vaga.cidade');
-//Route::get('vaga/{uf}', [VagaController::class, 'getVagaPorUf'])->name('vaga.uf');
+
 
