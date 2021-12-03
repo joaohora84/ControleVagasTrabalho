@@ -77,8 +77,8 @@
                                         <div class="col">
                                             <label class="form-label" for="valeTransporte"><strong>Vale
                                                     transporte</strong></label>
-                                            <select class="form-select"  value="{{ $vaga->valeTransporte ?? '' }}" aria-label="Default select example"
-                                                name="valeTransporte">
+                                            <select class="form-select" value="{{ $vaga->valeTransporte ?? '' }}"
+                                                aria-label="Default select example" name="valeTransporte">
                                                 <option value="true">Sim</option>
                                                 <option value="false">Não</option>
                                             </select>
@@ -87,7 +87,7 @@
                                             <label class="form-label" for="valeRefeicao"><strong>Vale
                                                     refeição</strong></label>
                                             <select class="form-select" aria-label="Default select example"
-                                                name="valeRefeicao"  value="{{ $vaga->valeRefeicao ?? '' }}">
+                                                name="valeRefeicao" value="{{ $vaga->valeRefeicao ?? '' }}">
                                                 <option value="true">Sim</option>
                                                 <option value="false">Não</option>
                                             </select>
@@ -99,15 +99,15 @@
                                             <label class="form-label" for="formaContratacao"><strong>Forma de
                                                     contratação</strong></label>
                                             <select class="form-select" aria-label="Default select example"
-                                                name="formaContratacao"  value="{{ $vaga->formaContratacao ?? '' }}">
+                                                name="formaContratacao" value="{{ $vaga->formaContratacao ?? '' }}">
                                                 <option value="clt">CLT</option>
                                                 <option value="pj">PJ</option>
                                             </select>
                                         </div>
                                         <div class="col">
                                             <label class="form-label" for="turno"><strong>Turno</strong></label>
-                                            <select class="form-select" aria-label="Default select example"
-                                                name="turno"  value="{{ $vaga->turno ?? '' }}">
+                                            <select class="form-select" aria-label="Default select example" name="turno"
+                                                value="{{ $vaga->turno ?? '' }}">
                                                 <option value="manha">Manhã</option>
                                                 <option value="tarde">Tarde</option>
                                                 <option value="noite">Noite</option>
@@ -154,7 +154,7 @@
                                         <div class="col">
                                             <label class="form-label" for="empresa"><strong>Empresa</strong></label>
                                             <select class="form-select" aria-label="Default select example"
-                                                name="empresa"  >
+                                                name="empresa">
                                                 @foreach($empresas as $e)
                                                 <option value="{{ $e->id }}">{{ $e->razaoSocial }}</option>
                                                 @endforeach
@@ -166,12 +166,12 @@
                                         <div class="mb-3"><label class="form-label"
                                                 for="especificacoes"><strong>Especificações</strong><br></label>
                                             <textarea class="form-control" id="especificacoes" rows="4"
-                                                name="especificacoes"></textarea>
+                                                name="especificacoes" value="{{ $vaga->especificacoes ?? '' }}"></textarea>
                                         </div>
                                         <div class="mb-3"><label class="form-label"
                                                 for="observacoes"><strong>Observações</strong><br></label>
                                             <textarea class="form-control" id="observacoes" rows="4"
-                                                name="observacoes"></textarea>
+                                                name="observacoes" value="{{ $vaga->observacoes ?? '' }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="mb-3"><button class="btn btn-primary btn-sm"

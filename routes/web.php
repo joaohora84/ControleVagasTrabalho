@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\VagaController;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,6 @@ use App\Http\Controllers\CandidatoController;
 Route::get('/', function () {
     return view('template.profile');
 });
-
-
-
 
 Route::get('empresa', [EmpresaController::class, 'showForm'])->name('empresa.showForm');
 Route::post('empresa', [EmpresaController::class, 'cadastro'])->name('empresa.cadastro');
@@ -45,14 +43,21 @@ Route::get('vaga/{cidade}', [VagaController::class, 'getVagaPorCidade'])->name('
 Route::get('vaga/{uf}', [VagaController::class, 'getVagaPorUf'])->name('vaga.uf');
 
 
-Route::get('candidato', [CandidatoController::class, 'showForm']);
+Route::get('candidato', [CandidatoController::class, 'showForm'])->name('candidato.showForm');
 Route::post('cadastro', [CandidatoController::class, 'cadastro'])->name('candidato.cadastro');
-Route::put('atualizar', [CandidatoController::class, 'atualizar'])->name('candidato.atualizar');
-Route::delete('deletar', [CandidatoController::class, 'deletar'])->name('candidato.delete');
+Route::get('candidato_editar/{id}', [CandidatoController::class, 'editar'])->name('candidato.editar');
+Route::post('candidato/{id}', [CandidatoController::class, 'atualizar'])->name('candidato.atualizar');
+Route::delete('candidato/{id}', [CandidatoController::class, 'deletar'])->name('candidato.deletar');
 Route::get('candidatos', [CandidatoController::class, 'getCandidato'])->name('candidato.list');
 Route::get('candidato/{cargo}', [CandidatoController::class, 'getCandidatoPorCargo'])->name('candidato.cargo');
 Route::get('candidato/{cidade}', [CandidatoController::class, 'getCandidatoPorCidade'])->name('candidato.cidade');
 Route::get('candidato/{uf}', [CandidatoController::class, 'getCandidatoPorUf'])->name('candidato.uf');
+
+Route::get('session/get', [SessionController::class, 'getSession'])->name('session.get');
+Route::get('session/set', [SessionController::class, 'setSession'])->name('session.set');
+Route::get('session/remove', [SessionController::class, 'removeSession'])->name('session.remove');
+
+Route::get('session/all', [SessionController::class, 'sessionAll']);
 
 
 

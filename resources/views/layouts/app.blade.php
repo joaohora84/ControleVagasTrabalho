@@ -28,6 +28,11 @@
     <script src="{{ asset('assets/js/chart.min.js') }}"></script>
     <script src="{{ asset('assets/js/bs-init.js') }}"></script>
     <script src="{{ asset('assets/js/theme.js') }}"></script>
+    <script>
+        $function () {
+            $(.date).datetimepicker({});
+        }
+    </script>    
 </body>
 
 </html>

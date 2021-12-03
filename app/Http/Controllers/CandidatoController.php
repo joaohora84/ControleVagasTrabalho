@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Candidato;
 use App\Models\ExperienciaProfissional;
 use App\Models\Endereco;
@@ -13,32 +15,100 @@ class CandidatoController extends Controller
         return view('pages.candidato');
     }
 
-    public function addCandidato(Request $request)
+    public function cadastro(Request $request)
     {
-         $data = $request->only(
-             'login',
-             'senha',
-             'nome',
-             'rg',
-             'orgaoExpeditor',
-             'dataExpedicao',
-             'cpf',
-             'dataNascimento',
-             'sexo',
-             'estadoCivil'
-            );
-         
-         Candidato::create($data);
+        $candidato = Candidato::create([
+            'login' => $request->login,
+            'senha' => $request->senha,
+            'nome' => $request->nome,
+            'rg' => $request->rg,
+            'orgaoExpeditor' => $request->orgaoExpeditor,
+            'dataExpedicao' => $request->dataExpedicao,
+            'ufExpedicao' => $request->ufExpedicao,
+            'cpf' => $request->cpf,
+            'dataNascimento' => $request->dataNascimento,
+            'sexo' => $request->sexo,
+            'estadoCivil' => $request->estadoCivil,
+            
+        ]);
 
-         return view('pages.candidato');
+        
+        Endereco::create([
+            'tipo' => $request->tipo,
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'cidade' => $request->cidade,
+            'bairro' => $request->bairro,
+            'uf' => $request->uf,
+            'email' => $request->email,
+            'telefoneResidencial' => $request->telefoneResidencial,
+            'telefoneComercial' => $request->telefoneComercial,
+            'candidato_id' => $candidato->id,
+            
+        ]);
+
+        $experiencias = session()->get('experiencas');
+
+        
+
+    
+        return view('pages.candidato');
                    
     }
 
-    public function removerCandidato(Candidato $candidato)
+    public function editar($id) 
     {
-        $candidato->delete();
+        
+        $candidato = Candidato::with('endereco')->find($id);
 
-        return view('pages.candidato');
+        return view('pages.candidato', compact('candidato'));
+        
+    }
+
+    public function atualizar(Request $request, $id)
+    {
+
+        $candidato = Candidato::find($id);
+        $endereco = Endereco::where('candidato_id', $id);
+
+        $candidato->update([
+            'login' => $request->login,
+            'senha' => $request->senha,
+            'nome' => $request->nome,
+            'rg' => $request->rg,
+            'orgaoExpeditor' => $request->orgaoExpeditor,
+            'dataExpedicao' => $request->dataExpedicao,
+            'ufExpedicao' => $request->ufExpedicao,
+            'cpf' => $request->cpf,
+            'dataNascimento' => $request->dataNascimento,
+            'sexo' => $request->sexo,
+            'estadoCivil' => $request->estadoCivil,
+        ]);
+
+        $endereco->update([
+            'tipo' => $request->tipo,
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'cidade' => $request->cidade,
+            'bairro' => $request->bairro,
+            'uf' => $request->uf,
+            'email' => $request->email,
+            'telefoneResidencial' => $request->telefoneResidencial,
+            'telefoneComercial' => $request->telefoneComercial,
+        ]);
+
+        $candidatos = Candidato::get();
+
+        return view('pages.candidato_list', compact('candidatos'));
+
+    
+    }
+
+    public function deletar(Candidato $id)
+    {
+        $id->delete();
+
+        return back()->with('success', 'Candidato deletada');
     }
 
     public function getCandidato()
@@ -47,6 +117,7 @@ class CandidatoController extends Controller
         $candidatos = Candidato::with('endereco', 'experienciaProfissional')->get();
 
         return view('pages.candidato_list', compact('candidatos'));
+        
     }
 
     public function getCandidatoPorCargo($cargo)

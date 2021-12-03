@@ -6,7 +6,7 @@
     <h3 class="text-dark mb-4">Empresa</h3>
     <div class="row mb-3">
 
-        <div class="col-lg-8">
+        <div class="col">
             <div class="row mb-3 d-none">
                 <div class="col">
                     <div class="card textwhite bg-primary text-white shadow">
@@ -50,8 +50,8 @@
 
                             @if(!empty($empresa))
                             <form action="{{ route('empresa.atualizar', $empresa->id) }}" method="POST">
-                                @else
-                                <form action="{{ route('empresa.cadastro') }}" method="POST">
+                            @else
+                            <form action="{{ route('empresa.cadastro') }}" method="POST">
                                     @endif
 
                                     @csrf

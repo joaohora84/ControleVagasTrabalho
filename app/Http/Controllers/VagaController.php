@@ -77,9 +77,11 @@ class VagaController extends Controller
             'empresa_id' => $request->empresa,
         ]);
 
-        $empresas = Empresa::with('endereco', 'vaga')->get();
+        
 
-        return view('pages.empresa_list', compact('empresas'));
+        $vagas = Vaga::with('empresa')->get();
+
+        return view('pages.vaga_list', compact('vagas'));
 
     
     }

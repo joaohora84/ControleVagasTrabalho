@@ -22,9 +22,9 @@ class CreateEnderecosTable extends Migration
             $table->string('cidade');
             $table->string('cep');
             $table->string('email');
-            $table->string('telefoneResidencial');
+            $table->string('telefoneResidencial')-nullable()->default(NULL);
             $table->string('telefoneComercial')->nullable()->default(NULL);
-            $table->string('fax');
+            $table->string('fax')->nullable()->default(NULL);
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('candidato_id'); 
 
