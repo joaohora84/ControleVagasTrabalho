@@ -93,49 +93,49 @@ class VagaController extends Controller
         return view('pages.vaga_list', compact('vagas'));
     }
 
-    public function getVagaPorCargo($cargo)
+    public function getVagaPorParametro(Request $request) 
     {
 
-        $vagas = Vaga::with('empresa')->where('cargo', $cargo)->get();
+        if($request->inlineRadioOptions == 'empresa'){
 
-        dd($vagas);
+            $vagas = Vaga::with('empresa')
+            ->join('empresas', function($join){
+                $join->on('vagas.empresa_id', '=', 'empresas.id');
+            })
+            
+            ->where('empresas.razaoSocial', 'like', $request->texto)
+            ->get();
 
-        return view('pages.vaga', compact('vagas'));
+        }
+        elseif($request->inlineRadioOptions == 'cidade'){
 
-    }
+            $vagas = Vaga::with('empresa')
+            ->join('empresas', function($join){
+                $join->on('vagas.empresa_id', '=', 'empresas.id');
+            })
+            ->join('enderecos', function($join){
+                $join->on('enderecos.empresa_id', '=', 'empresas.id');
+            })
+            ->where('enderecos.cidade', '=', $request->texto)
+            ->get();
 
-    public function getVagaPorCidade($cidade)
-    {
+        }
+        elseif($request->inlineRadioOptions == 'uf'){
 
-        $vagas = Vaga::with('empresa')->where('cidade', $cidade)->get();
+            $vagas = Vaga::with('empresa')->where('uf', $request->texto)->get();
 
-        dd($vagas);
+        }
+        elseif($request->inlineRadioOptions == 'cargo'){
 
-        return view('pages.vaga', compact('vagas'));
-    }
+            $vagas = Vaga::with('empresa')->where('cargo', $request->texto)->get();
 
-    public function getVagaPorUf($uf){
+        } else {
 
-        $vagas = Vaga::with('empresa')->where('uf', $uf)->get();
+            $vagas = Vaga::with('empresa')->get();
 
-        dd($vagas);
+        }
 
-        return view('pages.vaga', compact('vagas'));
-
-    }
-
-    public function getVagaPorEmpresa($idEmpresa) {
-
-        $vagas = Vaga::with('empresa')
-                    ->join('empresas', function($join){
-                        $join->on('vagas.empresa_id', '=', 'empresas.id');
-                    })
-                    ->where('empresas.id', '=', $idEmpresa)
-                    ->get();
-
-        dd($vagas);
-
-        return view('pages.vaga', compact('vagas'));
+        return view('pages.vaga_list', compact('vagas'));
 
     }
 

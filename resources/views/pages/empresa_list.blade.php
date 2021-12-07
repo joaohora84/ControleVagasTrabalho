@@ -5,11 +5,20 @@
 <div class="container-fluid">
     <h3 class="text-dark mb-4">Empresas</h3>
     <div class="card shadow">
-        <div class="card-header py-3">
-            <div class="mb-3">
-                <a class="btn btn-primary" href="{{ route('empresa.showForm') }}" role="button"
-                    title="Cadastrar nova empresa">Adicionar</a>
+        <div class="card-header py-6 ">
+
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <a class="btn btn-primary" href="{{ route('empresa.showForm') }}" role="submit"
+                            title="Cadastrar nova empresa">Adicionar</a>
+                    </div>
+                </div>
+              
             </div>
+
         </div>
         <div class="card-body">
             <div class="row">
@@ -22,11 +31,36 @@
                                 <option value="100">100</option>
                             </select>&nbsp;</label></div>
                 </div>
-                <div class="col-md-6">
-                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input
-                                type="search" class="form-control form-control-sm" aria-controls="dataTable"
-                                placeholder="Search"></label></div>
+
+                <div class="col-md-6 ">
+
+                    <form action="{{ route('empresa.busca') }}" method="GET">
+
+                        <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="razao">
+                                <label class="form-check-label" for="inlineRadio1">Razão social</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="cidade">
+                                <label class="form-check-label" for="inlineRadio2">Cidade</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                    value="uf">
+                                <label class="form-check-label" for="inlineRadio3">UF</label>
+                            </div>
+                            <label class="form-label">
+                                <input type="search" name="texto" class="form-control form-control-sm"
+                                    aria-controls="dataTable" placeholder="Pesquisar">
+                            </label>
+                        </div>
+                    </form>
+
                 </div>
+
             </div>
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <table class="table my-0" id="dataTable">
@@ -75,7 +109,8 @@
             </div>
             <div class="row">
                 <div class="col-md-6 align-self-center">
-                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of
+                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10
+                        of
                         27</p>
                 </div>
                 <div class="col-md-6">

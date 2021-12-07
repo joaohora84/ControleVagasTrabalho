@@ -20,10 +20,10 @@ class CreateCandidatosTable extends Migration
             $table->string('nome');
             $table->string('rg');
             $table->string('orgaoExpeditor');
-            $table->date('dataExpedicao');
+            $table->date('dataExpedicao')->format('d/m/Y');
             $table->string('ufExpedicao');
             $table->string('cpf');
-            $table->date('dataNascimento');
+            $table->date('dataNascimento')->format('d/m/Y');
             $table->string('sexo');
             $table->string('estadoCivil');
             $table->timestamps();

@@ -32,7 +32,6 @@ class CandidatoController extends Controller
             
         ]);
 
-        
         Endereco::create([
             'tipo' => $request->tipo,
             'cep' => $request->cep,
@@ -47,11 +46,31 @@ class CandidatoController extends Controller
             
         ]);
 
-        $experiencias = session()->get('experiencas');
+        $experiencias = session()->get('experiencias');
+
+        if($experiencias) {
+
+            foreach ( $experiencias as $e )
+        {
+
+            ExperienciaProfissional::create([
+               'empresa' => $e['empresa'],
+               'cargo' => $e['cargo'],
+               'formaContratacao' => $e['formaContratacao'],
+               'dataInicio' => $e['dataInicio'],
+               'dataConclusao' => $e['dataConclusao'],
+               'candidato_id' => $candidato->id,
+           ]); 
+
+        }
+
+        $request->session()->forget('experiencias');
+
+        }
 
         
 
-    
+       
         return view('pages.candidato');
                    
     }
@@ -120,48 +139,53 @@ class CandidatoController extends Controller
         
     }
 
-    public function getCandidatoPorCargo($cargo)
+
+    public function getCandidatoPorParametro(Request $request)
     {
 
-        $candidatos = Candidato::with('endereco', 'experienciaProfissional')
+        if($request->inlineRadioOptions == 'nome')
+        {
+
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')
+            ->where('nome', 'like', $request->texto)->get();
+
+        }
+        elseif($request->inlineRadioOptions == 'cidade'){
+
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')
+                        ->join('enderecos', function($join){
+                            $join->on('enderecos.candidato_id', '=', 'candidatos.id');
+                        })
+                        ->where('enderecos.cidade', '=', $request->texto)
+                        ->get();
+
+        }
+        elseif($request->inlineRadioOptions == 'uf'){
+
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')
+                        ->join('enderecos', function($join){
+                            $join->on('enderecos.candidato_id', '=', 'candidatos.id');
+                        })
+                        ->where('enderecos.uf', '=', $request->texto)
+                        ->get();
+
+        }
+        elseif($request->inlineRadioOptions == 'cargo'){
+
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')
                         ->join('experiencia_profissionals', function($join){
                             $join->on('experiencia_profissionals.candidato_id', '=', 'candidatos.id');
                         })
-                        ->where('experiencia_profissionals.cargo', '=', $cargo)
+                        ->where('experiencia_profissionals.cargo', '=', $request->texto)
                         ->get();
 
-        dd($candidatos);
+        } else {
 
-        return view('pages.candidato', compact('candidatos'));                        
-    }
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')->get();
 
-    public function getCandidatoPorCidade($cidade)
-    {
-        $candidatos = Candidato::with('endereco', 'experienciaProfissional')
-                        ->join('enderecos', function($join){
-                            $join->on('enderecos.candidato_id', '=', 'candidatos.id');
-                        })
-                        ->where('enderecos.cidade', '=', $cidade)
-                        ->get();
+        }
 
-        dd($candidatos);
+        return view('pages.candidato_list', compact('candidatos'));
 
-        return view('pages.candidato', compact('candidatos'));                        
-    }
-
-    public function getCandidatoPorUf($uf)
-    {
-        $candidatos = Candidato::with('endereco', 'experienciaProfissional')
-                        ->join('enderecos', function($join){
-                            $join->on('enderecos.candidato_id', '=', 'candidatos.id');
-                        })
-                        ->where('enderecos.uf', '=', $uf)
-                        ->get();
-
-        dd($candidatos);
-
-
-        return view('pages.candidato', compact('candidatos'));  
-                              
     }
 }

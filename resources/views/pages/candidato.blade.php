@@ -20,19 +20,20 @@
                         <h6 class="text-primary fw-bold m-0">Experiências profissionais</h6>
                     </div>
                     <div class="card-body">
-                        
+
                         <ol class="list-group list-group-numbered">
                             @foreach((array) Session::get('experiencias') as $e )
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
-                                    <div class="fw-bold">{{ $e['empresa'] }}</div>
-                                    {{ $e['cargo'] }}
+                                    <div class="fw-bold">
+                                        {{ $e['empresa'] ?? $candidato->experienciaProfissional->empresa }}</div>
+                                    {{ $e['cargo'] ?? $candidato->experienciaProfissional->cargo}}
                                 </div>
                                 <span class="badge bg-primary rounded-pill"></span>
                             </li>
-                           @endforeach
+                            @endforeach
                         </ol>
-                       
+
 
                     </div>
                 </div>
@@ -80,22 +81,27 @@
                                 <p class="text-primary m-0 fw-bold">Dados</p>
                             </div>
                             <div class="card-body">
-
-
+                           
+                                
                                 @if(!empty($candidato))
-                                <form action="{{ route('candidato.atualizar', $candidato->id) }}" method="POST">
-                                    @else
-                                    <form action="{{ route('candidato.cadastro') }}" method="POST">
-                                        @endif
 
-                                        @csrf
+                                    <form action="{{ route('candidato.atualizar', $candidato->id) }}" method="POST" >
+
+                                @else
+                                    
+                                    <form action="{{ route('candidato.cadastro' ) }}" method="POST">
+                          
+                                @endif
+                                 
+                                @csrf
                                         <div class="row">
                                             <div class="col">
                                                 <div class="mb-3">
-                                                    
+
                                                     <label class="form-label" for="login"><strong>Login</strong></label>
                                                     <input class="form-control" type="text" id="login"
-                                                        value="{{ $candidato->login ?? session()->get('login') }}" name="login">
+                                                        value="{{ $candidato->login ?? session()->get('login') }}"
+                                                        name="login">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -122,8 +128,6 @@
                                                         value="{{ $candidato->cpf ?? '' }}" name="cpf">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="rg"><strong>RG
@@ -132,6 +136,9 @@
                                                         value="{{ $candidato->rg ?? '' }}" name="rg">
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+
                                             <div class="col">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="orgaoExpeditor"><strong>Órgão
@@ -142,59 +149,67 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label" for="ufExpedicao"><strong>UF</strong></label>
-                                                <select class="form-select" id="ufExpedicao"
-                                                    value="{{ $candidato->ufExpedicao ?? '' }}" name="ufExpedicao">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                        for="ufExpedicao"><strong>UF</strong></label>
+                                                    <select class="form-select" id="ufExpedicao" name="ufExpedicao"
+                                                        value="{{ $candidato->ufExpedicao ?? '' }}">
 
-                                                    <option value="AC">Acre</option>
-                                                    <option value="AL">Alagoas</option>
-                                                    <option value="AP">Amapá</option>
-                                                    <option value="AM">Amazonas</option>
-                                                    <option value="BA">Bahia</option>
-                                                    <option value="CE">Ceará</option>
-                                                    <option value="DF">Distrito Federal</option>
-                                                    <option value="ES">Espírito Santo</option>
-                                                    <option value="GO">Goiás</option>
-                                                    <option value="MA">Maranhão</option>
-                                                    <option value="MT">Mato Grosso</option>
-                                                    <option value="MS">Mato Grosso do Sul</option>
-                                                    <option value="MG">Minas Gerais</option>
-                                                    <option value="PA">Pará</option>
-                                                    <option value="PB">Paraíba</option>
-                                                    <option value="PR">Paraná</option>
-                                                    <option value="PE">Pernambuco</option>
-                                                    <option value="PI">Piauí</option>
-                                                    <option value="RJ">Rio de Janeiro</option>
-                                                    <option value="RN">Rio Grande do Norte</option>
-                                                    <option value="RS">Rio Grande do Sul</option>
-                                                    <option value="RO">Rondônia</option>
-                                                    <option value="RR">Roraima</option>
-                                                    <option value="SC">Santa Catarina</option>
-                                                    <option value="SP">São Paulo</option>
-                                                    <option value="SE">Sergipe</option>
-                                                    <option value="TO">Tocantins</option>
-                                                </select>
+                                                        <option value="AC">Acre</option>
+                                                        <option value="AL">Alagoas</option>
+                                                        <option value="AP">Amapá</option>
+                                                        <option value="AM">Amazonas</option>
+                                                        <option value="BA">Bahia</option>
+                                                        <option value="CE">Ceará</option>
+                                                        <option value="DF">Distrito Federal</option>
+                                                        <option value="ES">Espírito Santo</option>
+                                                        <option value="GO">Goiás</option>
+                                                        <option value="MA">Maranhão</option>
+                                                        <option value="MT">Mato Grosso</option>
+                                                        <option value="MS">Mato Grosso do Sul</option>
+                                                        <option value="MG">Minas Gerais</option>
+                                                        <option value="PA">Pará</option>
+                                                        <option value="PB">Paraíba</option>
+                                                        <option value="PR">Paraná</option>
+                                                        <option value="PE">Pernambuco</option>
+                                                        <option value="PI">Piauí</option>
+                                                        <option value="RJ">Rio de Janeiro</option>
+                                                        <option value="RN">Rio Grande do Norte</option>
+                                                        <option value="RS">Rio Grande do Sul</option>
+                                                        <option value="RO">Rondônia</option>
+                                                        <option value="RR">Roraima</option>
+                                                        <option value="SC">Santa Catarina</option>
+                                                        <option value="SP">São Paulo</option>
+                                                        <option value="SE">Sergipe</option>
+                                                        <option value="TO">Tocantins</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="col">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="dataExpedicao"><strong>Data expedição
-                                                        </strong></label>
-                                                    <input class="form-control" type="text" id="dataNascimento"
-                                                        value="{{ $candidato->dataExpedicao ?? '' }}"
-                                                        name="dataExpedicao">
+
+                                                <label class="form-label" for="dataExpedicao"><strong>Data
+                                                        expedição</strong></label>
+                                                <div class='input-group data' id='dataExpedicao'>
+
+                                                    <input type='text' value="{{ $candidato->dataExpedicao ?? '' }}"
+                                                        class="form-control" name="dataExpedicao" />
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
+
                                             </div>
 
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="dataNascimento"><strong>Data
-                                                            nascimento
-                                                        </strong></label>
-                                                    <input class="form-control" type="text" id="dataNascimento"
-                                                        value="{{ $candidato->dataNascimento ?? '' }}"
-                                                        name="dataNascimento">
+                                                <label class="form-label" for="dataNascimento"><strong>Data
+                                                        nascimento</strong></label>
+                                                <div class='input-group data' id='dataNascimento'>
+
+                                                    <input type='text' value="{{ $candidato->dataExpedicao ?? '' }}"
+                                                        class="form-control" name="dataNascimento" />
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -335,9 +350,10 @@
 
                                 </div>
 
-                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" type="submit" >Salvar</button>
                                 </div>
-                                </form>
+                            </form>
                             </div>
                         </div>
 
@@ -352,8 +368,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-              
-                        <form action="{{ route('session.set') }}" method="GET">
+
+                            <form action="{{ route('session.set') }}" method="GET">
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-4">
@@ -379,34 +395,41 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="dataInicio"><strong>Data início
-                                            </strong></label>
-                                        <input class="form-control" type="text" id="dataInicio" name="dataInicio">
+                                    <label class="form-label" for="dataNascimento"><strong>Data
+                                            início</strong></label>
+                                    <div class='input-group data' id='dataInicio'>
+
+                                        <input type='text' class="form-control" name="dataInicio" />
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
 
                                 </div>
                                 <div class="col">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="dataConclusao"><strong>Data conclusão
-                                            </strong></label>
-                                        <input class="form-control" type="text" id="dataConclusao" name="dataConclusao">
+                                    <label class="form-label" for="dataConclusao"><strong>Data
+                                            conclusao</strong></label>
+                                    <div class='input-group data' id='dataConclusao'>
+
+                                        <input type='text' class="form-control" name="dataConclusao" />
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
 
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <button class="btn btn-primary btn-sm" type="submit">Adicionar experiência</button>
+                                <button class="btn btn-primary btn-sm" 
+                                 type="submit" >Adicionar experiência</button>
                             </div>
-                        </form>
-                        
+                    </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 
     @endsection

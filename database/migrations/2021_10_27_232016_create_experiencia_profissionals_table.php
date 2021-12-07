@@ -18,8 +18,8 @@ class CreateExperienciaProfissionalsTable extends Migration
             $table->string('empresa');
             $table->string('cargo');
             $table->string('formaContratacao');
-            $table->date('dataInicio');
-            $table->date('dataConclusao');
+            $table->date('dataInicio')->format('d/m/Y');
+            $table->date('dataConclusao')->format('d/m/Y');
             $table->unsignedBigInteger('candidato_id');
             $table->foreign('candidato_id')
                 ->unsigned()

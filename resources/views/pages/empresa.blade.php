@@ -52,7 +52,7 @@
                             <form action="{{ route('empresa.atualizar', $empresa->id) }}" method="POST">
                             @else
                             <form action="{{ route('empresa.cadastro') }}" method="POST">
-                                    @endif
+                            @endif
 
                                     @csrf
                                     <div class="row">

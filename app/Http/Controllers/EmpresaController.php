@@ -106,48 +106,41 @@ class EmpresaController extends Controller
 
     }
 
-
-    public function getEmpresaPorUf($uf)
+    public function getEmpresaPorParametro(Request $request)
     {
 
-        $empresas = Empresa::with('endereco', 'vaga')
+        if($request->inlineRadioOptions == 'razao'){
+
+            $empresas = Empresa::with('endereco', 'vaga')
+            ->where('razaoSocial', $request->texto)->get();
+
+        }
+        elseif($request->inlineRadioOptions == 'cidade'){
+
+            $empresas = Empresa::with('endereco', 'vaga')
                         ->join('enderecos', function($join){
                             $join->on('enderecos.empresa_id', '=', 'empresas.id');
                         })
-                        ->where('enderecos.uf', '=', $uf)
+                        ->where('enderecos.cidade', '=', $request->texto)
                         ->get();
 
-        dd($empresas);
+        }
+        elseif($request->inlineRadioOptions == 'uf'){
 
-    
-        return view('pages.empresa', compact('empresas'));
-
-    }
-
-    public function getEmpresaPorCidade($cidade)
-    {
-
-        $empresas = Empresa::with('endereco', 'vaga')
+            $empresas = Empresa::with('endereco', 'vaga')
                         ->join('enderecos', function($join){
                             $join->on('enderecos.empresa_id', '=', 'empresas.id');
                         })
-                        ->where('enderecos.cidade', '=', $cidade)
+                        ->where('enderecos.uf', '=', $request->texto)
                         ->get();
 
-        dd($empresas);
+        } else {
 
-       return view('pages.empresa', compact('empresas'));
+            $empresas = Empresa::with('endereco', 'vaga')->get();
 
-    }
+        }
 
-    public function getEmpresaPorNome($nome)
-    {
-
-        $empresas = Empresa::with('endereco', 'vaga')->where('razaoSocial', $nome)->get();
-
-        dd($empresas);
-
-        return view('pages.empresa', compact('empresas'));
+        return view('pages.empresa_list', compact('empresas'));
 
     }
 
