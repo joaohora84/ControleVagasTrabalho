@@ -12,68 +12,91 @@ class CandidatoController extends Controller
 {
     public function showForm()
     {
+        
+        session()->forget('experiencias', session()->get('experiencias'));
         return view('pages.candidato');
     }
 
     public function cadastro(Request $request)
     {
-        $candidato = Candidato::create([
-            'login' => $request->login,
-            'senha' => $request->senha,
-            'nome' => $request->nome,
-            'rg' => $request->rg,
-            'orgaoExpeditor' => $request->orgaoExpeditor,
-            'dataExpedicao' => $request->dataExpedicao,
-            'ufExpedicao' => $request->ufExpedicao,
-            'cpf' => $request->cpf,
-            'dataNascimento' => $request->dataNascimento,
-            'sexo' => $request->sexo,
-            'estadoCivil' => $request->estadoCivil,
+
+        if($request->submit == 'salvar'){
             
-        ]);
 
-        Endereco::create([
-            'tipo' => $request->tipo,
-            'cep' => $request->cep,
-            'logradouro' => $request->logradouro,
-            'cidade' => $request->cidade,
-            'bairro' => $request->bairro,
-            'uf' => $request->uf,
-            'email' => $request->email,
-            'telefoneResidencial' => $request->telefoneResidencial,
-            'telefoneComercial' => $request->telefoneComercial,
-            'candidato_id' => $candidato->id,
-            
-        ]);
+            $candidato = Candidato::create([
+                'login' => $request->login,
+                'senha' => $request->senha,
+                'nome' => $request->nome,
+                'rg' => $request->rg,
+                'orgaoExpeditor' => $request->orgaoExpeditor,
+                'dataExpedicao' => $request->dataExpedicao,
+                'ufExpedicao' => $request->ufExpedicao,
+                'cpf' => $request->cpf,
+                'dataNascimento' => $request->dataNascimento,
+                'sexo' => $request->sexo,
+                'estadoCivil' => $request->estadoCivil,
+                
+            ]);
+    
+            Endereco::create([
+                'tipo' => $request->tipo,
+                'cep' => $request->cep,
+                'logradouro' => $request->logradouro,
+                'cidade' => $request->cidade,
+                'bairro' => $request->bairro,
+                'uf' => $request->uf,
+                'email' => $request->email,
+                'telefoneResidencial' => $request->telefoneResidencial,
+                'telefoneComercial' => $request->telefoneComercial,
+                'candidato_id' => $candidato->id,
+                
+            ]);
+    
+            $experiencias = session()->get('experiencias');
+    
+            if($experiencias) {
+    
+                foreach ( $experiencias as $e )
+                {
+        
+                    ExperienciaProfissional::create([
+                    'empresa' => $e['empresa'],
+                    'cargo' => $e['cargo'],
+                    'formaContratacao' => $e['formaContratacao'],
+                    'dataInicio' => $e['dataInicio'],
+                    'dataConclusao' => $e['dataConclusao'],
+                    'candidato_id' => $candidato->id,
+                ]); 
+        
+                }
+    
+            $request->session()->forget('experiencias');
+    
+            return view('pages.candidato_list');
 
-        $experiencias = session()->get('experiencias');
+            }
 
-        if($experiencias) {
+        } elseif ($request->submit == 'add_experiencia') {
 
-            foreach ( $experiencias as $e )
-        {
+        $experiencias = [
+            'empresa' => $request->empresa,
+            'cargo' => $request->cargo,
+            'formaContratacao' => $request->formaContratacao,
+            'dataInicio' => $request->dataInicio,
+            'dataConclusao' => $request->dataConclusao,
 
-            ExperienciaProfissional::create([
-               'empresa' => $e['empresa'],
-               'cargo' => $e['cargo'],
-               'formaContratacao' => $e['formaContratacao'],
-               'dataInicio' => $e['dataInicio'],
-               'dataConclusao' => $e['dataConclusao'],
-               'candidato_id' => $candidato->id,
-           ]); 
+        ];
 
-        }
-
-        $request->session()->forget('experiencias');
-
-        }
+        session()->push('experiencias', $experiencias);
 
         
-
-       
         return view('pages.candidato');
-                   
+
     }
+
+            
+              
+}
 
     public function editar($id) 
     {

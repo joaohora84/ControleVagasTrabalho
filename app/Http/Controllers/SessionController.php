@@ -17,6 +17,36 @@ class SessionController extends Controller
 
     public function setSession(Request $request)
     {
+        
+
+        $candidato = [
+            'login' => $request->login,
+            'senha' => $request->senha,
+            'nome' => $request->nome,
+            'rg' => $request->rg,
+            'orgaoExpeditor' => $request->orgaoExpeditor,
+            'dataExpedicao' => $request->dataExpedicao,
+            'ufExpedicao' => $request->ufExpedicao,
+            'cpf' => $request->cpf,
+            'dataNascimento' => $request->dataNascimento,
+            'sexo' => $request->sexo,
+            'estadoCivil' => $request->estadoCivil,
+            
+        ];
+
+        $endereco = [
+            'tipo' => $request->tipo,
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'cidade' => $request->cidade,
+            'bairro' => $request->bairro,
+            'uf' => $request->uf,
+            'email' => $request->email,
+            'telefoneResidencial' => $request->telefoneResidencial,
+            'telefoneComercial' => $request->telefoneComercial,
+            
+        ];
+
         $experiencias = [
             'empresa' => $request->empresa,
             'cargo' => $request->cargo,
@@ -26,9 +56,14 @@ class SessionController extends Controller
 
         ];
 
+        session()->put('candidato', $candidato);
+        session()->put('endereco', $endereco);
         session()->push('experiencias', $experiencias);
 
-        $experiencias = session()->get('experiencias');
+        //$experiencias = session()->get('experiencias');
+        $candidato = session()->get('candidato');
+
+        //dd($candidato);
 
         return redirect()->back();
 
@@ -39,6 +74,9 @@ class SessionController extends Controller
     {
 
         $request->session()->forget('experiencias');
+        $request->session()->forget('canidado');
+        $request->session()->forget('candidado');
+        $request->session()->forget('endereco');
 
         echo "Dados da session removidos.";
 
