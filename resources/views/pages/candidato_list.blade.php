@@ -82,7 +82,7 @@
 
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown"
-                                        aria-haspopup="false" aria-expanded="false">
+                                        aria-haspopup="true" aria-expanded="true">
                                         <i class="fas fa-list"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">

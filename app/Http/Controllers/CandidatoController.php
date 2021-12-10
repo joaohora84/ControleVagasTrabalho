@@ -13,8 +13,10 @@ class CandidatoController extends Controller
     public function showForm()
     {
         
-        session()->forget('experiencias', session()->get('experiencias'));
+        //session()->flush();
+
         return view('pages.candidato');
+
     }
 
     public function cadastro(Request $request)
@@ -70,24 +72,59 @@ class CandidatoController extends Controller
         
                 }
     
-            $request->session()->forget('experiencias');
+            $request->session()->flush();
     
-            return view('pages.candidato_list');
-
+            
             }
+
+            $candidatos = Candidato::with('endereco', 'experienciaProfissional')->get();
+
+            return view('pages.candidato_list', compact('candidatos'));
 
         } elseif ($request->submit == 'add_experiencia') {
 
-        $experiencias = [
-            'empresa' => $request->empresa,
-            'cargo' => $request->cargo,
-            'formaContratacao' => $request->formaContratacao,
-            'dataInicio' => $request->dataInicio,
-            'dataConclusao' => $request->dataConclusao,
+            $candidato = [
+                'login' => $request->login,
+                'senha' => $request->senha,
+                'nome' => $request->nome,
+                'rg' => $request->rg,
+                'orgaoExpeditor' => $request->orgaoExpeditor,
+                'dataExpedicao' => $request->dataExpedicao,
+                'ufExpedicao' => $request->ufExpedicao,
+                'cpf' => $request->cpf,
+                'dataNascimento' => $request->dataNascimento,
+                'sexo' => $request->sexo,
+                'estadoCivil' => $request->estadoCivil,
+                
+            ];
 
-        ];
+            session()->put('candidato', $candidato);
 
-        session()->push('experiencias', $experiencias);
+            $endereco = [
+                'tipo' => $request->tipo,
+                'cep' => $request->cep,
+                'logradouro' => $request->logradouro,
+                'cidade' => $request->cidade,
+                'bairro' => $request->bairro,
+                'uf' => $request->uf,
+                'email' => $request->email,
+                'telefoneResidencial' => $request->telefoneResidencial,
+                'telefoneComercial' => $request->telefoneComercial,
+                
+            ];
+
+            session()->put('endereco', $endereco);
+
+            $experiencias = [
+                'empresa' => $request->empresa,
+                'cargo' => $request->cargo,
+                'formaContratacao' => $request->formaContratacao,
+                'dataInicio' => $request->dataInicio,
+                'dataConclusao' => $request->dataConclusao,
+
+            ];
+
+            session()->push('experiencias', $experiencias);
 
         
         return view('pages.candidato');

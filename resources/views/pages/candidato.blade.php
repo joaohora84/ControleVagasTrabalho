@@ -7,14 +7,16 @@
     <h3 class="text-dark mb-4">Candidato</h3>
     <div class="row mb-3">
 
-        
+
+
         @if(!empty($candidato))
         <form action="{{ route('candidato.atualizar', $candidato->id) }}" method="POST" />
         @else
         <form action="{{ route('candidato.cadastro' ) }}" method="POST">
-        @endif
+            @endif
 
             @csrf
+
             <div class="col-md-8">
                 <div class="row mb-3 d-none">
                     <div class="col">
@@ -66,14 +68,16 @@
 
                                             <label class="form-label" for="login"><strong>Login</strong></label>
                                             <input class="form-control" type="text" id="login"
-                                                value="{{ $candidato->login ?? '' }}" name="login">
+                                                value="{{ $candidato->login ?? session()->get('candidato')['login'] }}"
+                                                name="login">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="senha"><strong>Senha</strong></label>
                                             <input class="form-control" type="password" id="senha"
-                                                value="{{ $candidato->senha ?? '' }}" name="senha">
+                                                value="{{ $candidato->senha ?? session()->get('candidato')['senha'] }}"
+                                                name="senha">
                                         </div>
                                     </div>
                                 </div>
@@ -83,14 +87,16 @@
                                             <label class="form-label" for="nome"><strong>Nome
                                                 </strong></label>
                                             <input class="form-control" type="text" id="nome"
-                                                value="{{ $candidato->nome ?? '' }}" name="nome">
+                                                value="{{ $candidato->nome ?? session()->get('candidato')['nome'] }}"
+                                                name="nome">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="cpf"><strong>CPF</strong></label>
                                             <input class="form-control" type="text" id="cpf"
-                                                value="{{ $candidato->cpf ?? '' }}" name="cpf">
+                                                value="{{ $candidato->cpf ?? session()->get('candidato')['cpf'] }}"
+                                                name="cpf">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -98,7 +104,8 @@
                                             <label class="form-label" for="rg"><strong>RG
                                                 </strong></label>
                                             <input class="form-control" type="text" id="rg"
-                                                value="{{ $candidato->rg ?? '' }}" name="rg">
+                                                value="{{ $candidato->rg ?? session()->get('candidato')['rg'] }}"
+                                                name="rg">
                                         </div>
                                     </div>
                                 </div>
@@ -109,14 +116,15 @@
                                             <label class="form-label" for="orgaoExpeditor"><strong>Órgão
                                                     expeditor</strong></label>
                                             <input class="form-control" type="text" id="orgaoExpeditor"
-                                                value="{{ $candidato->orgaoExpeditor ?? '' }}" name="orgaoExpeditor">
+                                                value="{{ $candidato->orgaoExpeditor ?? session()->get('candidato')['orgaoExpeditor'] }}"
+                                                name="orgaoExpeditor">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="ufExpedicao"><strong>UF</strong></label>
                                             <select class="form-select" id="ufExpedicao" name="ufExpedicao"
-                                                value="{{ $candidato->ufExpedicao ?? '' }}">
+                                                value="{{ $candidato->ufExpedicao ?? session()->get('candidato')['ufExpedicao'] }}">
 
                                                 <option value="AC">Acre</option>
                                                 <option value="AL">Alagoas</option>
@@ -154,7 +162,8 @@
                                                 expedição</strong></label>
                                         <div class='input-group data' id='dataExpedicao'>
 
-                                            <input type='text' value="{{ $candidato->dataExpedicao ?? '' }}"
+                                            <input type='text'
+                                                value="{{ $candidato->dataExpedicao ?? session()->get('candidato')['dataExpedicao'] }}"
                                                 class="form-control" name="dataExpedicao" id="dataExpedicao" />
                                             <span class="input-group-addon"><span
                                                     class="glyphicon glyphicon-calendar"></span></span>
@@ -169,7 +178,8 @@
                                                 nascimento</strong></label>
                                         <div class='input-group data' id='dataNascimento'>
 
-                                            <input type='text' value="{{ $candidato->dataExpedicao ?? '' }}"
+                                            <input type='text'
+                                                value="{{ $candidato->dataExpedicao ?? session()->get('candidato')['dataNascimento'] }}"
                                                 class="form-control" name="dataNascimento" id="dataNascimento" />
                                             <span class="input-group-addon"><span
                                                     class="glyphicon glyphicon-calendar"></span></span>
@@ -180,7 +190,8 @@
                                             <label class="form-label" for="sexo"><strong>Sexo
                                                 </strong></label>
                                             <input class="form-control" type="text" id="sexo"
-                                                value="{{ $candidato->sexo ?? '' }}" name="sexo">
+                                                value="{{ $candidato->sexo ?? session()->get('candidato')['sexo'] }}"
+                                                name="sexo">
                                         </div>
                                     </div>
                                     <div class="col">
@@ -188,7 +199,8 @@
                                             <label class="form-label" for="estadoCivil"><strong>Estado
                                                     civil</strong></label>
                                             <input class="form-control" type="text" id="estadoCivil"
-                                                value="{{ $candidato->estadoCivil ?? '' }}" name="estadoCivil">
+                                                value="{{ $candidato->estadoCivil ?? session()->get('candidato')['estadoCivil'] }}"
+                                                name="estadoCivil">
                                         </div>
                                     </div>
 
@@ -206,8 +218,9 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="form-label" for="tipo"><strong>Tipo</strong></label>
-                                        <select class="form-select" aria-label="Default select example" 
-                                        id="tipo" name="tipo">
+                                        <select class="form-select" aria-label="Default select example"
+                                            value="{{ $candidato->endereco->tipo ?? session()->get('endereco')['tipo'] }}"
+                                            id="tipo" name="tipo">
                                             <option value="urbano">Urbano</option>
                                             <option value="rural">Rural</option>
                                         </select>
@@ -217,7 +230,8 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="cep"><strong>CEP</strong></label>
                                             <input class="form-control" type="text" id="cep"
-                                                value="{{ $candidato->endereco->cep ?? '' }}" name="cep">
+                                                value="{{ $candidato->endereco->cep ?? session()->get('endereco')['cep'] }}"
+                                                name="cep">
                                         </div>
                                     </div>
 
@@ -227,29 +241,33 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="logradouro"><strong>Logradouro</strong></label>
                                     <input class="form-control" type="text" id="logradouro"
-                                        value="{{ $candidato->endereco->logradouro ?? '' }}" name="logradouro">
+                                        value="{{ $candidato->endereco->logradouro ?? session()->get('endereco')['logradouro'] }}"
+                                        name="logradouro">
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="cidade"><strong>Cidade</strong></label>
                                             <input class="form-control" type="text" id="cidade"
-                                                value="{{ $candidato->endereco->cidade ?? '' }}" name="cidade">
+                                                value="{{ $candidato->endereco->cidade ?? session()->get('endereco')['cidade'] }}"
+                                                name="cidade">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="bairro"><strong>Bairro</strong></label>
                                             <input class="form-control" type="text" id="bairro"
-                                                value="{{ $candidato->endereco->bairro ?? '' }}" name="bairro">
+                                                value="{{ $candidato->endereco->bairro ?? session()->get('endereco')['bairro'] }}"
+                                                name="bairro">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <label class="form-label" for="uf"><strong>UF</strong></label>
-                                        <select class="form-select" id="uf" value="{{ $candidato->endereco->uf ?? '' }}"
-                                            name="uf">
+                                        <select class="form-select" id="uf" name="uf"
+                                            @value="{{ $candidato->endereco->uf ?? session()->get('endereco')['uf'] }}"
+                                            >
 
                                             <option value="AC">Acre</option>
                                             <option value="AL">Alagoas</option>
@@ -285,7 +303,8 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="email"><strong>Email</strong></label>
                                             <input class="form-control" type="email" id="email"
-                                                value="{{ $candidato->endereco->email ?? '' }}" name="email">
+                                                value="{{ $candidato->endereco->email ?? session()->get('endereco')['email'] }}"
+                                                name="email">
                                         </div>
                                     </div>
 
@@ -297,7 +316,7 @@
                                             <label class="form-label" for="fax"><strong>Telefone
                                                     residencial</strong></label>
                                             <input class="form-control" type="text" id="telefoneResidencial"
-                                                value="{{ $candidato->endereco->telefoneResidencial ?? ''}}"
+                                                value="{{ $candidato->endereco->telefoneResidencial ?? session()->get('endereco')['telefoneResidencial'] }}"
                                                 name="telefoneResidencial">
                                         </div>
                                     </div>
@@ -306,7 +325,7 @@
                                             <label class="form-label" for="telefoneComercial"><strong>Telefone
                                                     Comercial</strong></label>
                                             <input class="form-control" type="text" id="telefoneComercial"
-                                                value="{{ $candidato->endereco->telefoneComercial ?? '' }}"
+                                                value="{{ $candidato->endereco->telefoneComercial ?? session()->get('endereco')['telefoneComercial'] }}"
                                                 name="telefoneComercial">
                                         </div>
                                     </div>
@@ -315,87 +334,92 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <button class="btn btn-primary btn-sm" value="salvar" 
-                                    name="submit" type="submit">Salvar</button>
-                                    <button class="btn btn-danger btn-sm" value="limpar" 
-                                    name="reset" type="reset">Limpar</button>
-                                    
+                                    <button class="btn btn-primary btn-sm" value="salvar" name="submit"
+                                        type="submit">Salvar</button>
+                                    <button class="btn btn-danger btn-sm" value="limpar" name="reset"
+                                        type="reset">Limpar</button>
+
                                 </div>
-        
-    </div>
-</div>
 
-<div class="card shadow mb-3">
-    <div class="card-header py-3">
-        <p class="text-primary m-0 fw-bold">Experiências profissionais</p>
-    </div>
-    <div class="card-body">
+                            </div>
+                        </div>
 
-            <div class="row">
-                <div class="col">
-                    <div class="mb-4">
-                        <label class="form-label" for="empresa"><strong>Empresa</strong></label>
-                        <input class="form-control" type="text" id="empresa" name="empresa">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-4">
-                        <label class="form-label" for="cargo"><strong>Cargo</strong></label>
-                        <input class="form-control" type="text" id="cargo" name="cargo">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <label class="form-label" for="formaContratacao"><strong>Forma de
-                            contratação</strong></label>
-                    <select class="form-select" aria-label="Default select example" name="formaContratacao">
-                        <option value="clt">CLT</option>
-                        <option value="pj">PJ</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label class="form-label" for="dataNascimento"><strong>Data
-                            início</strong></label>
-                    <div class='input-group data' id='dataInicio'>
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">Experiências profissionais</p>
+                            </div>
+                            <div class="card-body">
 
-                        <input type='text' class="form-control" name="dataInicio" />
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="empresa"><strong>Empresa</strong></label>
+                                            <input class="form-control" type="text" id="empresa" name="empresa">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="cargo"><strong>Cargo</strong></label>
+                                            <input class="form-control" type="text" id="cargo" name="cargo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label" for="formaContratacao"><strong>Forma de
+                                                contratação</strong></label>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="formaContratacao">
+                                            <option value="clt">CLT</option>
+                                            <option value="pj">PJ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label" for="dataNascimento"><strong>Data
+                                                início</strong></label>
+                                        <div class='input-group data' id='dataInicio'>
 
-                </div>
-                <div class="col">
-                    <label class="form-label" for="dataConclusao"><strong>Data
-                            conclusao</strong></label>
-                    <div class='input-group data' id='dataConclusao'>
+                                            <input type='text' class="form-control" name="dataInicio" />
+                                            <span class="input-group-addon"><span
+                                                    class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
 
-                        <input type='text' class="form-control" name="dataConclusao" />
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label" for="dataConclusao"><strong>Data
+                                                conclusao</strong></label>
+                                        <div class='input-group data' id='dataConclusao'>
 
-                </div>
-            </div>
+                                            <input type='text' class="form-control" name="dataConclusao" />
+                                            <span class="input-group-addon"><span
+                                                    class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
 
-            <div class="mb-3">
-                <button class="btn btn-primary btn-sm" value="add_experiencia" name="submit"
-                type="submit">Adicionar experiência</button>
-            </div>
-        </form>
+                                    </div>
+                                </div>
 
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" value="add_experiencia" name="submit"
+                                        type="submit">Adicionar experiência</button>
+                                </div>
 
-        <ol class="list-group list-group-numbered">
-            @foreach((array) Session::get('experiencias') as $e )
+                                <ol class="list-group list-group-numbered">
+            @foreach(((array) Session::get('experiencias')) ?? ($candidato->experienciaProfissional) as $e)
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">
-                        {{ $e['empresa'] ?? '' }}
+                        {{ $e['empresa'] ?? $e->empresa }}
                     </div>
-                    {{ $e['cargo'] ?? '' }}
+                    {{ $e['cargo'] ?? $e->cargo}}
                 </div>
                 <span class="badge bg-primary rounded-pill"></span>
             </li>
             @endforeach
         </ol>
+        </form>
+
+
+        
 
     </div>
 
@@ -406,6 +430,11 @@
 
 </div>
 
+
+
+
+
+<!--
 <script>
 
     var login = document.getElementById("login");
@@ -639,6 +668,6 @@
 
 
 </script>
-  
+-->
 
 @endsection
