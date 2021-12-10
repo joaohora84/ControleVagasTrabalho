@@ -158,6 +158,8 @@ class CandidatoController extends Controller
        
         $candidatos = Candidato::with('endereco', 'experienciaProfissional')->get();
 
+       // dd($candidatos);
+
         return view('pages.candidato_list', compact('candidatos'));
         
     }

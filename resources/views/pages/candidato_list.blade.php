@@ -27,7 +27,7 @@
                     <form action="{{ route('candidato.busca') }}" method="GET">
 
                         <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                        <div class="form-check form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                                     value="nome">
                                 <label class="form-check-label" for="inlineRadio1">Nome</label>
@@ -55,7 +55,7 @@
                     </form>
 
                 </div>
-            
+
             </div>
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <table class="table my-0" id="dataTable">
@@ -66,6 +66,7 @@
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Data nascimento</th>
+                            <th>Experiencias</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -77,6 +78,25 @@
                             <td>{{ $c->nome }}</td>
                             <td>{{ $c->cpf }}</td>
                             <td>{{ $c->dataNascimento }}</td>
+                            <td>
+
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown"
+                                        aria-haspopup="false" aria-expanded="false">
+                                        <i class="fas fa-list"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        @foreach ($c->experienciaProfissional as $e )
+
+                                        <p class="dropdown-item h5"><strong>Cargo: {{ $e->cargo }}</strong></p>
+                                        
+                                        <p class="dropdown-item h6"><strong>Empresa: {{ $e->empresa }}</strong></p>
+                                        <div class="dropdown-divider"></div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </td>
                             <td>
 
                                 <a href="{{ route('candidato.editar', $c->id) }}" title="Editar"><i
@@ -97,6 +117,7 @@
                             <td><strong>Nome</strong></td>
                             <td><strong>CPF</strong></td>
                             <td><strong>Data nascimento</strong></td>
+                            <td><strong>Experiencas</strong></td>
                             <td><strong></strong></td>
                         </tr>
                     </tfoot>
@@ -124,5 +145,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection
